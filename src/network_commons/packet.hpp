@@ -23,7 +23,7 @@ namespace NetworkCommons {
 		// 	char* msg;
 		// };
 
-		// enum values here are used BOTH as systems for encoding and systems for determining type
+		// enum values here are used BOTH as systems for encoding and systems for determining type, chart below shows the ranges ascribing to each type
 
 		enum PacketType {
 			// === NO DATA === (<= 20)
@@ -86,9 +86,9 @@ namespace NetworkCommons {
 		class Packet {
 		    public:
 				PacketType packet_type;
-				DataType data_type;
-				uint32_t local_tick = 0;
-				uint32_t num_bytes;
+				DataType data_type; // type of data
+				uint32_t local_tick = 0; // tick that packet was serialized on
+				uint32_t num_bytes; // size of packet, shows up when serialized
 
 				union {
 					char* text;

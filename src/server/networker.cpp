@@ -1,7 +1,7 @@
 #include "server.hpp"
 #include <iostream>
 
-void Server::Networker::Init(char* hostname, char* port) {
+void Server::Networker::Init(char* hostname, char* port) { // set up server
 	memset(&hints, 0, sizeof(hints)); // clear hints
 	hints.ai_family = AF_INET6; // ipv6
 	hints.ai_socktype = SOCK_DGRAM; // udp
@@ -32,7 +32,7 @@ void Server::Networker::Init(char* hostname, char* port) {
   	// NetworkCommons::Packet::Packet p2(p1.Serialize(123));
   	// p2.PrettyPrint();
 
-	fcntl(sockfd, F_SETFL, O_NONBLOCK);
+	fcntl(sockfd, F_SETFL, O_NONBLOCK); // nonblocking -- recv and recvfrom don't wait until they get a message, they just keep on looping
 
 	if (p == NULL) {
 		fprintf(stderr, "networker: failed to create socket\n");
@@ -40,12 +40,12 @@ void Server::Networker::Init(char* hostname, char* port) {
 	}
 }
 
-void Server::Networker::Listen() {
+void Server::Networker::Listen() { // thread 2
 	while (!quit_flag) {
 		char* msg = (char*)calloc(256, sizeof(char));
 		recv(sockfd, msg, 255, 0);
 
-		if (msg[0]) message_queue.push(msg);
+		if (msg[0]) message_queue.push(msg); // push to end of queue if message recieved
 	}
 }
 
