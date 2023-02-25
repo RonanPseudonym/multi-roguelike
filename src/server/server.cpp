@@ -25,7 +25,8 @@ void Server::Server::Launch(char* hostname, char* port) {
 	  start = std::chrono::steady_clock::now();
  
 	  while (!networker.message_queue.empty()) { // loop through message queue and process each message
-	  	std::cout << "Tick " << cycle_count << " :: " << networker.message_queue.front() << std::endl;
+	  	NetworkCommons::Packet::Packet packet(networker.message_queue.front()->data);
+	  	// std::cout << "Tick " << cycle_count << " :: " << networker.message_queue.front() << std::endl;
 	  	free(networker.message_queue.front());
 	  	networker.message_queue.pop();
 	  }

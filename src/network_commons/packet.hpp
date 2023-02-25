@@ -18,10 +18,10 @@ namespace NetworkCommons {
 
 		// };
 
-		// struct UnprocessedPacket {
-		// 	sockaddr* addr;
-		// 	char* msg;
-		// };
+		struct UnprocessedPacket {
+			sockaddr* addr;
+			unsigned char* data;
+		};
 
 		// enum values here are used BOTH as systems for encoding and systems for determining type, chart below shows the ranges ascribing to each type
 

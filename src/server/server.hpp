@@ -34,7 +34,7 @@ namespace Server {
     public:
   	  int sockfd, rv;                       // |        |
   	  struct addrinfo hints, *servinfo, *p; // unix stuff
-  	  std::queue<char*> message_queue; // messages are queued here in thread 2 and then processed in thread 1, the game cycle
+  	  std::queue<NetworkCommons::Packet::UnprocessedPacket*> message_queue; // messages are queued here in thread 2 and then processed in thread 1, the game cycle
   	  bool quit_flag = false; // to merge thread 2 back into thread 1
 
   	  void Init(char* hostname, char* port); // set up server

@@ -26,6 +26,12 @@ void Server::Networker::Init(char* hostname, char* port) { // set up server
 		break;
 	}
 
+	// int yes=1;
+	// if (setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof yes) == -1) {
+	//     perror("setsockopt");
+	//     exit(1);
+	// }
+
   	// NetworkCommons::Packet::Packet p1(NetworkCommons::Packet::PacketType::HANDSHAKE_REQUEST, p->ai_addr);
   	// p1.PrettyPrint();
 
@@ -45,7 +51,11 @@ void Server::Networker::Listen() { // thread 2
 		char* msg = (char*)calloc(256, sizeof(char));
 		recv(sockfd, msg, 255, 0);
 
-		if (msg[0]) message_queue.push(msg); // push to end of queue if message recieved
+		if (msg[0]) {
+			NetworkCommons::Packet::UnprocessedPacket* up;
+			up->data = (unsigned char*)msg;
+			message_queue.push(up); // push to end of queue if message recieved
+		}
 	}
 }
 
